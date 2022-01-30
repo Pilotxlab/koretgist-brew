@@ -1,0 +1,415 @@
+{% extends 'blog/blog_base.html' %}
+{% load only_hours %}
+
+{% block title %}
+    Home
+{% endblock title %}
+
+
+{% block content %}
+    {% if categories %}
+    <div class="main-slider">
+		<div class="swiper-container position-static" data-slide-effect="slide" data-autoheight="false"
+			data-swiper-speed="500" data-swiper-autoplay="5000" data-swiper-margin="0" data-swiper-slides-per-view="4"
+			data-swiper-breakpoints="true" data-swiper-loop="true" >
+			<div class="swiper-wrapper">
+                {% for category in categories %}
+				<div class="swiper-slide">
+					<a class="slider-category" href="{{ category.get_absolute_url }}">
+						<div class="category-image">
+                            <img src="{{ category.image.url }}"
+                                 class="category-image"
+                                 alt="Blog Image"
+                                 width="100%" height="235"
+                                 style="background-size: cover; background-repeat: no-repeat;"
+                             >
+                        </div>
+
+						<div class="category">
+							<div class="display-table center-text">
+								<div class="display-table-cell">
+									<h3><b>{{ category.name }}</b></h3>
+								</div>
+							</div>
+						</div>
+					</a>
+				</div><!-- swiper-slide -->
+                {% endfor %}
+
+			</div><!-- swiper-wrapper -->
+		</div><!-- swiper-container -->
+
+	</div><!-- slider -->
+    {% else %}
+        <center><div class="alert alert-warning"><b>No Categories</b></div></center>
+    {% endif %}
+
+
+
+    <!-- Content Row -->
+    <section class="blog-area section">
+
+        <!-- --------------------------------------------------------------------------------------------------------------------------------
+                                            SECTION TWO: RECENT PUBLISHED ARTICLES
+        -------------------------------------------------------------------------------------------------------------------------------- -->
+        <div class="container mb-3">
+            <div class="row">
+                <div class="col-md-12">
+                        <div class="card shadow-sm" style="background-color: #fff;">
+                            <div class="card-header" style="background-color: rgb(115, 115, 145);">
+                                <h4 class="title" style="color: #fff;">Recent Published Articles</h4>
+                            </div>
+                            <div class="card-body">
+                            <div class="content">
+                    <section class="blog-list px-3 py-5 p-md-5">
+                        {% if recent_articles %}
+                            <div class="container" style="margin: 0; padding: 0;">
+                            {% for article in recent_articles %}
+                                <div class="item mb-5">
+                                    <div class="media">
+                                        <img class="mr-3 img-fluid post-thumb d-none d-md-flex" src="{{ article.image.url }}" alt="image">
+                                        <div class="media-body" style="margin: 0; padding: 0;">
+                                            <h3 class="title mb-1"><a href="{{article.get_absolute_url}}">{{ article.title }}</a></h3>
+                                            <div class="meta mb-1"><span class="date"><b>Published:</b>  <i>{{ article.date_published|timesince|upto:',' }} ago</i></span>
+                                                <span class="time">{{ article.count_words }} word{{ article.count_words|pluralize }}</span>
+                                                <span class="time">{{ article.read_time }} min{{ article.read_time|pluralize }} read</span>
+                                                <span class="comment">{{ article.views }} view{{ article.views|pluralize }}</span>
+                                                <span class="comment"><a href="{% url 'blog:article_comments' article.slug %}">{{ article.comments.count }} comment{{ article.comments.count|pluralize }}</a></span>
+                                                <span class="time">
+                                                <i class="fas fa-chevron-down" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                </i>
+                                                <div class="dropdown-menu">
+                                                    <a class="dropdown-item" href="{% url 'blog:article_update' slug=article.slug %}">Edit Article</a>
+                                                    <div class="dropdown-divider w-100" ></div>
+                                                    <a data-toggle="modal" data-target="#deleteModal" class="dropdown-item" href="javascript:void(0)">Delete Article</a>
+                                                </div>
+                                                </span>
+                                            </div>
+                                            <a class="more-link" href="{{article.get_absolute_url}}">View details &rarr;</a>
+                                            <hr class="solid"><!-- Solid divider -->
+                                        </div><!--//media-body-->
+                                    </div><!--//media-->
+                                </div><!--//item-->
+                                    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel"><b>Ready to Delete Article?</b></h5>
+                                            <button
+                                                class="close"
+                                                type="button"
+                                                data-dismiss="modal"
+                                                aria-label="Close"
+                                            >
+                                                <span aria-hidden="true">×</span>
+                                            </button>
+                                            </div>
+                                            <div class="modal-body">
+                                            Select "Delete Article" below if you want to delete the article.
+                                            </div>
+                                            <div class="modal-footer">
+                                            <button
+                                                class="btn btn-secondary"
+                                                type="button"
+                                                data-dismiss="modal"
+                                            >
+                                                Cancel
+                                            </button>
+                                            <a class="btn btn-danger" href="{% url 'blog:article_delete' slug=article.slug %}">Delete Article</a>
+                                            </div>
+                                        </div>
+                                        </div>
+                                </div>
+                            {% endfor %}
+                            </div>
+                        {% else %}
+                                <center><div class="alert alert-info"><b>No Recent Published Articles</b></div></center>
+                        {% endif %}
+                        </section>
+    
+                            </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </section>
+
+
+        <!-- --------------------------------------------------------------------------------------------------------------------------------
+                                                SECTION THREE: TRENDING ARTICLES
+        -------------------------------------------------------------------------------------------------------------------------------- -->
+
+
+        <div class="container mb-3">
+            <div class="row">
+                <div class="col-md-12">
+                        <div class="card shadow-sm">
+                            <div class="card-header">
+                                <h4 class="title">Trending Articles</h4>
+                            </div>
+                            <div class="card-body">
+                            <div class="content">
+                    <section class="blog-list px-3 py-5 p-md-5">
+                            {% for tag in article.tags.all %}
+                            {% if tag.name == 'Trending' %}
+                            <div class="container">
+                            {% for article in tag_articles_list %}
+                                <div class="item mb-5">
+                                    <div class="media">
+                                        <img class="mr-3 img-fluid post-thumb d-none d-md-flex" src="{{ article.image.url }}" alt="image">
+                                        <div class="media-body">
+                                            <h3 class="title mb-1"><a href="{{article.get_absolute_url}}">{{ article.title }}</a></h3>
+                                            <div class="meta mb-1"><span class="date"><b>Published:</b>  <i>{{ article.date_published|timesince|upto:',' }} ago</i></span>
+                                                <span class="time">{{ article.count_words }} word{{ article.count_words|pluralize }}</span>
+                                                <span class="time">{{ article.read_time }} min{{ article.read_time|pluralize }} read</span>
+                                                <span class="comment">{{ article.views }} view{{ article.views|pluralize }}</span>
+                                                <span class="comment"><a href="#">{{ article.comments.count }} comment{{ article.comments.count|pluralize }}</a></span>
+                                                <span class="time">
+                                                <i class="fas fa-chevron-down" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                </i>
+                                                <div class="dropdown-menu">
+                                                    <a class="dropdown-item" href="{% url 'blog:article_update' slug=article.slug %}">Edit Article</a>
+                                                    <div class="dropdown-divider w-100" ></div>
+                                                    <a data-toggle="modal" data-target="#deleteModal" class="dropdown-item" href="javascript:void(0)">Delete Article</a>
+                                                </div>
+                                                </span>
+                                            </div>
+                                            <a class="more-link" href="{{article.get_absolute_url}}">View details &rarr;</a>
+                                            <hr class="solid">
+                                        </div>
+                                    </div>
+                                </div>
+                                    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel"><b>Ready to Delete Article?</b></h5>
+                                            <button
+                                                class="close"
+                                                type="button"
+                                                data-dismiss="modal"
+                                                aria-label="Close"
+                                            >
+                                                <span aria-hidden="true">×</span>
+                                            </button>
+                                            </div>
+                                            <div class="modal-body">
+                                            Select "Delete Article" below if you want to delete the article.
+                                            </div>
+                                            <div class="modal-footer">
+                                            <button
+                                                class="btn btn-secondary"
+                                                type="button"
+                                                data-dismiss="modal"
+                                            >
+                                                Cancel
+                                            </button>
+                                            <a class="btn btn-danger" href="{% url 'blog:article_delete' slug=article.slug %}">Delete Article</a>
+                                            </div>
+                                        </div>
+                                        </div>
+                                </div>
+                            {% endfor %}
+                            </div>
+                        {% else %}
+                                <center><div class="alert alert-info"><b>No Trending Articles</b></div></center>
+                        {% endif %}
+                        {% endfor %}
+                        </section>
+    
+                            </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+            </div>
+        </div>
+
+
+
+
+    
+        <!-- -------------------------------------------------------------------------------------------------------------------------------- -->
+
+        <!-- SECTION FOUR -->
+
+        <!-- --------------------------------------------------------------------------------------------------------------------------- -->
+
+    <section class="blog-area section">
+        <div class="container" style="display: flex;">
+           
+            <div class="row-category-container" style="display: flex; justify-content: center; align-items: center; 
+            width: 100%; padding: 0; margin: 0; background-color: rgb(115, 115, 145);"> 
+                    {% if categories %}
+                        <div class="row-category" style="width: 100%;">
+                            
+                            {% for category in categories %}
+                                
+                                {% if articles %}
+                                        <h2 class="title" style="margin: 10px 0 0 0; padding: 0; text-transform: uppercase;
+                                         font-size: 25px; font-weight: bolder; background-color: rgb(255, 255, 255);">
+                                            <a href="{{ category.get_absolute_url }}"><b>{{ category.name }}</b></a></h2>
+                                        <div class="category-wrap-contanier" style="max-width: 100%; display: flex; flex-direction: row; flex-wrap: wrap;">
+                                            {% for article in articles %}
+                                                
+                                                {% if category.name == article.category.name %}
+                                                <div class="flex-container" style="width: 300px; height: auto; margin-left: 10px;">
+                                                    <div class="category-card-container" style="width: 100%; max-height: 100%; padding: 0; margin: 0;">
+                                                        <div class="card h-100" style="width: 100%; height: 100%;">
+                                                            <div class="single-post post-style-1" style="width: 100%; height: 250px;">
+
+                                                                <div class="blog-image">
+                                                                    <img src="{{ article.image.url }}"
+                                                                        width="100%" height="100px"
+                                                                        style = "background-repeat: no-repeat; background-size: cover;"
+                                                                        alt="Blog Image">
+                                                                </div>
+
+                                                                <a class="avatar" href="{% url 'blog:author_articles' article.author.username %}"><img src="{{ article.author.profile.image.url }}"
+                                                                                                alt="Profile Image" class="profile-image">
+                                                                </a>
+
+                                                                <div class="blog-info">
+
+                                                                    <h6 class="title" style="padding: 0; margin: 0 0 20px 0; font-size: small;"><a href="{{ article.get_absolute_url }}"><b>{{ article.title }}</b></a></h4>
+
+                                                                    <ul class="post-footer" style=" display: flex; align-items: center; justify-content: center; width: 100%; height: 30px;">
+                                                                        <li><a style="font-size: smaller;"><i class="ion-ios-clock"></i>{{ article.read_time }} min{{ article.read_time|pluralize }} read</a></li>
+                                                                        <li><i class="ion-chatbubbles" style="font-size: smaller;"></i>{{ article.comments.count }}</li>
+                                                                        <li><i class="ion-eye" style="font-size: smaller;"></i>{{ article.views }}</li>
+                                                                    </ul>
+
+                                                                </div><!-- article-info -->
+                                                            </div><!-- single-post -->
+                                                        </div><!-- card -->
+                                                    </div><!-- col-lg-4 col-md-6 -->
+                                                </div>
+                                                {% else %}
+                                                    <p></p>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </div>
+                                {% else %}
+                                    <p></p>
+                                {% endif %}
+                            
+                            {% endfor %}
+                    </div><!-- row -->
+                    {% else %}
+                        <p></p>
+                    {% endif %}
+            </div><!-- row -->
+
+                {# Pagination for article post #}
+            {% if is_paginated %}
+
+                {# Displays previous pages #}
+                {% if page_obj.has_previous %}
+                    <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
+                    <a class="btn btn-outline-info mb-4"
+                    href="?page={{ page_obj.previous_page_number }}">Previous
+                    </a>
+                {% endif %}
+
+                {# Displays current page #}
+                {% for num in page_obj.paginator.page_range %}
+                    {% if page_obj.number == num %}
+                        <a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>
+                    {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                        <a class="btn btn-outline-info mb-4" href="?page={{ num }}">{{ num }}</a>
+                    {% endif %}
+                {% endfor %}
+
+                {# Displays next pages #}
+            {% if page_obj.has_next %}
+                    <a class="btn btn-outline-info mb-4"
+                    href="?page={{ page_obj.next_page_number }}">Next
+                    </a>
+                    <a class="btn btn-outline-info mb-4"
+                    href="?page={{ page_obj.paginator.num_pages }}">Last
+                    </a>
+                {% endif %}
+
+            {% endif %}
+
+        </div><!-- container -->
+
+    </section>
+
+{% endblock content %}
+
+
+<section class="blog-area section">
+    <div class="container infinite-container">
+        {% if articles %}
+        <div class="row infinite-item">
+            {% for article in articles %}
+            <div class="col-lg-4 col-md-6">
+                <div class="card h-100">
+                    <div class="single-post post-style-1">
+                        <h3><b>{{ article.category.name }}</b></h3>
+                        <div class="blog-image">
+                            <img src="{{ article.image.url }}"
+                                 alt="Blog Image"
+                                 width="330" height="220"
+                            >
+                        </div>
+
+                        <a class="avatar" href="{% url 'blog:author_articles' article.author.username %}">
+                            <img class="profile-image" src="{{ article.author.profile.image.url }}" alt="Profile Image">
+                        </a>
+
+                        <div class="blog-info">
+
+                            <h4 class="title"><a href="{{ article.get_absolute_url }}"><b>{{ article.title }}</b></a></h4>
+
+                            <ul class="post-footer">
+                                <li><a><i class="ion-ios-clock"></i>{{ article.read_time }} min{{ article.read_time|pluralize }} read</a></li>
+                                <li><i class="ion-chatbubbles"></i>{{ article.comments.count }}</li>
+                                <li><a><i class="ion-eye"></i>{{ article.views }}</a></li>
+                            </ul>
+
+                        </div><!-- article-info -->
+                    </div><!-- single-post -->
+                </div><!-- card -->
+            </div><!-- col-lg-4 col-md-6 -->
+            {% endfor %}
+        </div><!-- row -->
+        {% else %}
+            <div class="alert alert-warning"><b>No Articles</b></div>
+        {% endif %}
+    {# Pagination for article post #}
+        {% if is_paginated %}
+
+            {# Displays previous pages #}
+            {% if page_obj.has_previous %}
+                <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
+                <a class="btn btn-outline-info mb-4"
+                   href="?page={{ page_obj.previous_page_number }}">Previous
+                </a>
+            {% endif %}
+
+            {# Displays current page #}
+            {% for num in page_obj.paginator.page_range %}
+                {% if page_obj.number == num %}
+                    <a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>
+                {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                    <a class="btn btn-outline-info mb-4" href="?page={{ num }}">{{ num }}</a>
+                {% endif %}
+             {% endfor %}
+
+            {# Displays next pages #}
+           {% if page_obj.has_next %}
+                <a class="btn btn-outline-info mb-4"
+                   href="?page={{ page_obj.next_page_number }}">Next
+                </a>
+                <a class="btn btn-outline-info mb-4"
+                   href="?page={{ page_obj.paginator.num_pages }}">Last
+                </a>
+            {% endif %}
+
+        {% endif %}
+    </div><!-- container -->
+</section>

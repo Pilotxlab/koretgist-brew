@@ -1,0 +1,7 @@
+Django>=2.2
+six
+Pillow
+django-tinymce4-lite
+django-filter
+django-taggit
+djangorestframework
