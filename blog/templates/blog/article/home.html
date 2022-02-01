@@ -7,6 +7,19 @@
 
 
 {% block content %}
+    <div class="lastest">
+        <div class="latest-heading">
+            <h3>Latest</h3>
+            <h4 class="latest-news-title"><a href="{{latest.get_absolute_url}}">{{latest.title}}</a></h4>
+            <span class="date"><b>Published:</b>  <i>{{ latest.date_published|timesince|upto:',' }} ago</i></span>
+        </div>
+        <div class="latest-news-image">
+            <img src="{{latest.image.url}}" alt="Latest News Image">
+        </div>
+
+    </div>
+
+
     {% if categories %}
     <div class="main-slider">
 		<div class="swiper-container position-static" data-slide-effect="slide" data-autoheight="false"
@@ -47,35 +60,35 @@
 
 
     <!-- Content Row -->
-    <section class="blog-area section">
+    <aside class="recent-area">
 
         <!-- --------------------------------------------------------------------------------------------------------------------------------
                                             SECTION TWO: RECENT PUBLISHED ARTICLES
         -------------------------------------------------------------------------------------------------------------------------------- -->
-        <div class="container mb-3">
-            <div class="row">
-                <div class="col-md-12">
-                        <div class="card shadow-sm" style="background-color: #fff;">
-                            <div class="card-header" style="background-color: rgb(115, 115, 145);">
+        <div class="recent-articles-container">
+            <div class="recent-articles-container-row">
+                <div class="recent-articles-container-col-md-12">
+                        <div class="card-shadow-sm" >
+                            <div class="recent-card-header">
                                 <h4 class="title" style="color: #fff;">Recent Published Articles</h4>
                             </div>
-                            <div class="card-body">
-                            <div class="content">
-                    <section class="blog-list px-3 py-5 p-md-5">
+                            <div class="recent-card-body">
+                            <div class="recent-content">
+                    <section class="blog-list-px-3-py-5-p-md-5">
                         {% if recent_articles %}
                             <div class="container" style="margin: 0; padding: 0;">
                             {% for article in recent_articles %}
-                                <div class="item mb-5">
-                                    <div class="media">
-                                        <img class="mr-3 img-fluid post-thumb d-none d-md-flex" src="{{ article.image.url }}" alt="image">
+                                <div class="item-mb-5">
+                                    <div class="media-recent">
+                                        <img class="img-fluid-recent" src="{{ article.image.url }}" alt="image">
                                         <div class="media-body" style="margin: 0; padding: 0;">
-                                            <h3 class="title mb-1"><a href="{{article.get_absolute_url}}">{{ article.title }}</a></h3>
-                                            <div class="meta mb-1"><span class="date"><b>Published:</b>  <i>{{ article.date_published|timesince|upto:',' }} ago</i></span>
+                                            <h3 class="title-mb-1"><a href="{{article.get_absolute_url}}">{{ article.title }}</a></h3>
+                                            <div class="meta"><span class="date"><b>Published:</b>  <i>{{ article.date_published|timesince|upto:',' }} ago</i></span>
                                                 <span class="time">{{ article.count_words }} word{{ article.count_words|pluralize }}</span>
                                                 <span class="time">{{ article.read_time }} min{{ article.read_time|pluralize }} read</span>
                                                 <span class="comment">{{ article.views }} view{{ article.views|pluralize }}</span>
                                                 <span class="comment"><a href="{% url 'blog:article_comments' article.slug %}">{{ article.comments.count }} comment{{ article.comments.count|pluralize }}</a></span>
-                                                <span class="time">
+                                                <!-- <span class="time">
                                                 <i class="fas fa-chevron-down" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 </i>
                                                 <div class="dropdown-menu">
@@ -83,14 +96,14 @@
                                                     <div class="dropdown-divider w-100" ></div>
                                                     <a data-toggle="modal" data-target="#deleteModal" class="dropdown-item" href="javascript:void(0)">Delete Article</a>
                                                 </div>
-                                                </span>
+                                                </span> -->
                                             </div>
                                             <a class="more-link" href="{{article.get_absolute_url}}">View details &rarr;</a>
                                             <hr class="solid"><!-- Solid divider -->
                                         </div><!--//media-body-->
                                     </div><!--//media-->
                                 </div><!--//item-->
-                                    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <!-- <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
@@ -101,7 +114,7 @@
                                                 data-dismiss="modal"
                                                 aria-label="Close"
                                             >
-                                                <span aria-hidden="true">×</span>
+                                                <span aria-hidden="true"> × </span>
                                             </button>
                                             </div>
                                             <div class="modal-body">
@@ -119,7 +132,7 @@
                                             </div>
                                         </div>
                                         </div>
-                                </div>
+                                </div> -->
                             {% endfor %}
                             </div>
                         {% else %}
@@ -134,7 +147,7 @@
             </div>
             </div>
         </div>
-    </section>
+    </aside>
 
 
         <!-- --------------------------------------------------------------------------------------------------------------------------------
@@ -142,90 +155,42 @@
         -------------------------------------------------------------------------------------------------------------------------------- -->
 
 
-        <div class="container mb-3">
-            <div class="row">
-                <div class="col-md-12">
-                        <div class="card shadow-sm">
-                            <div class="card-header">
-                                <h4 class="title">Trending Articles</h4>
-                            </div>
-                            <div class="card-body">
-                            <div class="content">
-                    <section class="blog-list px-3 py-5 p-md-5">
-                            {% for tag in article.tags.all %}
-                            {% if tag.name == 'Trending' %}
-                            <div class="container">
-                            {% for article in tag_articles_list %}
-                                <div class="item mb-5">
-                                    <div class="media">
-                                        <img class="mr-3 img-fluid post-thumb d-none d-md-flex" src="{{ article.image.url }}" alt="image">
-                                        <div class="media-body">
-                                            <h3 class="title mb-1"><a href="{{article.get_absolute_url}}">{{ article.title }}</a></h3>
-                                            <div class="meta mb-1"><span class="date"><b>Published:</b>  <i>{{ article.date_published|timesince|upto:',' }} ago</i></span>
-                                                <span class="time">{{ article.count_words }} word{{ article.count_words|pluralize }}</span>
-                                                <span class="time">{{ article.read_time }} min{{ article.read_time|pluralize }} read</span>
-                                                <span class="comment">{{ article.views }} view{{ article.views|pluralize }}</span>
-                                                <span class="comment"><a href="#">{{ article.comments.count }} comment{{ article.comments.count|pluralize }}</a></span>
-                                                <span class="time">
-                                                <i class="fas fa-chevron-down" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                </i>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="{% url 'blog:article_update' slug=article.slug %}">Edit Article</a>
-                                                    <div class="dropdown-divider w-100" ></div>
-                                                    <a data-toggle="modal" data-target="#deleteModal" class="dropdown-item" href="javascript:void(0)">Delete Article</a>
-                                                </div>
-                                                </span>
-                                            </div>
-                                            <a class="more-link" href="{{article.get_absolute_url}}">View details &rarr;</a>
-                                            <hr class="solid">
-                                        </div>
-                                    </div>
-                                </div>
-                                    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel"><b>Ready to Delete Article?</b></h5>
-                                            <button
-                                                class="close"
-                                                type="button"
-                                                data-dismiss="modal"
-                                                aria-label="Close"
-                                            >
-                                                <span aria-hidden="true">×</span>
-                                            </button>
-                                            </div>
-                                            <div class="modal-body">
-                                            Select "Delete Article" below if you want to delete the article.
-                                            </div>
-                                            <div class="modal-footer">
-                                            <button
-                                                class="btn btn-secondary"
-                                                type="button"
-                                                data-dismiss="modal"
-                                            >
-                                                Cancel
-                                            </button>
-                                            <a class="btn btn-danger" href="{% url 'blog:article_delete' slug=article.slug %}">Delete Article</a>
-                                            </div>
-                                        </div>
-                                        </div>
-                                </div>
-                            {% endfor %}
-                            </div>
-                        {% else %}
-                                <center><div class="alert alert-info"><b>No Trending Articles</b></div></center>
-                        {% endif %}
-                        {% endfor %}
-                        </section>
-    
-                            </div>
-                            </div>
-                        </div>
+        <section class="trending-articles">
+            <div class="trending-articles-container">
+                <div class="most-trending-article">
+                    <div class="most-trending-head">
+                        <h4><a href="{{most_trending_article.get_absolute_url}}">{{ most_trending_article.title }}</a></h4>
+                        <span class="date"><b>Published:</b><i>{{ most_trending_article.date_published|timesince|upto:',' }} ago</i></span>
+                        <li><i class="ion-eye" style="font-size: smaller;"></i>{{ most_trending_article.views }}</li>
+                        <p>{{most_trending_article.body|truncatewords:50}}</p>
+                    </div>
+                    <div class="most-trending-image">
+                        <img src="{{most_trending_article.image.url}}" alt="Most Trending Article Image">
+                    </div>
                 </div>
+                <div class="other-trending-articles">
+                    {% if other_trending_articles %}
+                        {% for article in other_trending_articles %}
+                            <div class="trending-articles">
+                                <img src="{{article.image.url}}" alt="{{article.title}}">
+                            </div>
+                            <div>
+                                <h4><a href="{{article.get_absolute_url}}"></a>{{article.title}}</h4>
+                                <li><a style="font-size: smaller;"><i class="ion-ios-clock"></i>{{ article.read_time }} min{{ article.read_time|pluralize }} read</a></li>
+                                <li><i class="ion-chatbubbles" style="font-size: smaller;"></i>{{ article.comments.count }}</li>
+                                <li><i class="ion-eye" style="font-size: smaller;"></i>{{ article.views }}</li>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                    <div class="alert alert-warning"><b>No Trending Articles</b></div>
+                    {% endif %}
+                </div>
+
             </div>
-            </div>
-        </div>
+
+
+
+        </section>
 
 
 

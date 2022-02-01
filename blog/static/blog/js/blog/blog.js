@@ -81,3 +81,4 @@ function postArticle(articleURl, articleData) {
           " Something went wrong, Please try again...");
   });
 }
+

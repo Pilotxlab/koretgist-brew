@@ -25,23 +25,29 @@ class ArticleListView(ListView):
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['categories'] = Category.objects.filter(approved=True)
 
         recent_articles = Article.objects.filter(
             status=Article.PUBLISHED, deleted=False).order_by("-date_published")[:5]
 
-        # tag_name = self.kwargs.get('tag_name', '')
-        
-        # global tag_articles_list
+        latest = Article.objects.filter(
+            status=Article.PUBLISHED, deleted=False).order_by("-date_published")[0]
 
         
-        # tag_articles_list = Article.objects.filter(tags__name__in=[tag_name],
-        #                                                status=Article.PUBLISHED,
-        #                                                deleted=False
-        #                                                )
 
-        context['recent_articles'] = recent_articles
+        trending_article_list = Article.objects.filter(status=Article.PUBLISHED, deleted=False).order_by('views')
+
+        most_trending_article = trending_article_list[len(trending_article_list)-1]
+        other_trending_articles = trending_article_list[1:10]
+
         # context['tag_articles_list'] = tag_articles_list
+        context={
+                'recent_articles': recent_articles,
+                'latest': latest,
+                'most_trending_article': most_trending_article,
+                'other_trending_articles': other_trending_articles,
+                'categories':  Category.objects.filter(approved=True)
+
+            }
         return context
 
 

@@ -84,7 +84,7 @@ header{ font-weight: 400; }
 
 .color-white{ color: #fff; }
 
-.display-table{ display: table; height: 100%; width: 100%; }
+.display-table{ display: table; height: 50%; width: 100%; margin-top: 10px;}
 
 .display-table-cell{ display: table-cell; vertical-align: middle; margin-top: 15px; margin-left: 10px; border-radius: 10px; }
 
@@ -117,34 +117,118 @@ header{ font-weight: 400; }
 3. MENU
 --------------------------------- */
 
-header{ width: 100%; overflow: hidden; background: #fff;
-    box-shadow: 0px 2px 10px rgba(0,0,0, .3); position: fixed; top: 0; z-index: 100;}
+header{ width: 100%; overflow: hidden; background: #000;
+    box-shadow: 0px 2px 10px rgba(0,0,0, .3); position: fixed; top: 0; z-index: 10; }
+
+header .personal-account{
+    float: right;
+    display: flex;
+    margin-top: 10px;
+}
+
+header .personal-account li{list-style: none;}
+
+header .personal-account li > a{ padding: 0 25px; color: rgb(191, 191, 191);}
+
+header .personal-account li > a:hover{ color: rgba(255, 44, 44);}
 
 header .logo{ float: left; height: 40px; margin: 10px; padding: 0;}
 
 header .logo img{ height: 100%; width: auto; }
 
+header .container-fluid{ display: flex; align-items: center;}
 
-header .main-menu{ display: inline-block; float: left; margin: 0!important;
-                          padding: 0!important;}
+header .main-menu{display: flex;
+                          padding: 0!important; margin: 20px 0 0 80px; justify-content: space-evenly;}
 
-header .main-menu > li{ float: left; list-style: none; display: inline-block; }
+header .main-menu li{list-style: none; margin-left: 10px;}
 
-header .main-menu > li > a{ height: 60px; line-height: 60px; padding: 0 25px; 
-    border-right: 1px solid #eee; background: rgb(115, 115, 145); color: #fff;}
+header .main-menu li > a{ padding: 0 25px; 
+    /* border-right: 0.1px solid #eee;  */
+    color: rgb(191, 191, 191);
+}
 
-header .main-menu > li > a:hover{  background: #eee; color: #000;}
+#app li a:hover{ color: rgba(255, 44, 44);}
+
 
 header .main-menu > li:first-child > a{ border-left: 1px solid #eee; }
 
+#app a .active{color: rgb(0, 0, 0); background: rgb(85, 83, 83);}
 
 header .visible.main-menu{ display: block; }
+
+
+.dropbtn {
+
+    height: fit-content;
+    display: flex;
+    width: 170px;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    margin: 0 41px 0 0;
+    padding: 0;
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0);
+}
+.dropbtn li{
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+.dropbtn li a{
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+.dropbtn i{
+    margin-left: 3px;
+}
+* {
+    box-sizing: border-box;
+}
+.dropdown {
+    position: relative;
+    display: block;
+    padding: 0;
+    margin: 0 0 0 0;
+    max-width: 100%;
+    height: fit-content;
+}
+
+.dropdown .blog-area{
+    display: none;
+
+}
+.header-container{
+    z-index: inherit;
+}
+.dropdown:hover .blog-area {
+    display: block;
+    position: fixed;
+    z-index: 1000;
+}
+.dropdown:hover .blog-area .row .col-row{ display: flex;}
+.dropdown:hover .blog-area .row .col-row .card{ width: 170px; margin-right: 5px; }
+/* header .blog-area:hover{display: block;} */
+
+/* header .blog-area .row div[class^="col"] { margin-bottom: 0; } */
+
+header .blog-area{ text-align: center; background: #ffffff; padding: 0; margin: 0;}
+
+header .blog-area .single-post{height: 180px; position: relative; padding: 0 0 45px 0; margin: 0;
+	overflow: hidden; box-shadow: 0px 0px 5px rgba(0,0,0,.1); border: 1px solid rgb(255, 255, 255); background: rgba(255, 255, 255, 1); }
+
+header .blog-area .single-post .title{ padding: auto 0 auto 0; margin-top: 10px;}
 
 
 
 /* SEARCH AREA */
 
-header .src-area{ position: relative; height: 60px; width: 50%; float: right; display: inline-block; background: rgb(115, 115, 145); }
+header .src-area{ position: relative; height: 40px; width: 50%; display: inline-block; margin: 10px 0 10px 25%;
+    border: 0.05px solid rgb(85, 83, 83);
+
+}
 
 header .src-area .src-input{
     position: absolute;
@@ -177,18 +261,53 @@ header .src-area .src-input::placeholder{color: #fff;}
 	line-height: 60px; cursor: pointer;
 	position: absolute; right: 0; font-size: 1.8em; }
 
-.main-menu .blog-area{display: none; padding-top: 0; margin-top: 0;}	
-header .blog-categories:hover + .blog-area{display: block;}
-header .blog-area:hover{display: block;}
+/* .main-menu .blog-area{display: none; padding-top: 0; margin-top: 0;}	
+header .blog-categories:hover + .blog-area{display: block;} */
 
-header .blog-area .row div[class^="col"] { margin-bottom: 0; }
+/* ----------------------------------
+    LATEST NEWS
+---------------------------------- */
 
-header .blog-area{ text-align: center; background: #ffffff; padding: 0; margin: 0;}
+.lastest{
+    background: #000;
+    display: flex;
+    height: 90vh;
+    margin-top: 120px;
+    padding-top: 50px;
+}
 
-header .blog-area .single-post{height: 180px; position: relative; padding: 0 0 45px 0; margin: 0;
-	overflow: hidden; box-shadow: 0px 0px 5px rgba(0,0,0,.1); border: 1px solid rgb(255, 255, 255); background: rgba(255, 255, 255, 1); }
+.lastest .latest-heading{
+    margin: 20px 30px 0 10px;
+}
 
-header .blog-area .single-post .title{ padding: auto 0 auto 0; margin-top: 10px;}
+.lastest .latest-heading h3{
+    background: rgb(169, 15, 15);
+    color: #fff;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.lastest .latest-heading h4{
+    /* background: rgb(169, 15, 15); */
+    color: #fff;
+    font-size: 35px;
+}
+.lastest .latest-heading .date{
+    /* background: rgb(169, 15, 15); */
+    color: #fff;
+}
+
+.lastest .latest-news-image{
+    width: 70%;
+    max-height: 100%;
+    margin-right: 10px;
+}
+.lastest .latest-news-image img{
+    max-width: 100%;
+    max-height: 100%;
+}
+
+
 
 /* ---------------------------------
 4. SLIDER
@@ -200,13 +319,13 @@ header .blog-area .single-post .title{ padding: auto 0 auto 0; margin-top: 10px;
 
 .main-slider .swiper-container{ overflow: visible; }
 
-.main-slider .category{ position: absolute; top: 0; bottom: 0; left: 0; right: 0;
+.main-slider .category{ position: absolute; bottom: 0; left: 0; right: 0;
 	z-index: 1; color: #fff; margin-top: 10px; margin-left: 10px;
-	border-radius: 10px;}
+	height: 100px;}
  
 .main-slider .category:after{ content:''; position: absolute; top: 0; bottom: 0;
-	left: 0; right: 0; z-index: -1; background: rgba(0,0,0,.4); width: 100%;
-	margin-top: 10px; margin-left: 10px; border-radius: 10px;}
+	left: 0; right: 0; z-index: -1; background: rgba(0,0,0,.9); width: 100%;
+	margin-top: 10px; margin-left: 10px; display: flex; align-items: center; justify-content: center;}
 
 .category-image { margin-top: 10px; margin-left: 10px; border-radius: 10px; object-fit: cover;}
 
@@ -225,6 +344,63 @@ header .blog-area .single-post .title{ padding: auto 0 auto 0; margin-top: 10px;
 /* ---------------------------------
 5. SINGLE POST
 --------------------------------- */
+
+aside{
+    margin-top: 40px;
+    float: right;
+    width: 30%;
+    background-color: #fff;
+}
+
+aside .recent-articles-container{
+    max-width: 100%;
+}
+aside .recent-articles-container .recent-card-header{
+    max-width: 100%;
+    background: rgb(169, 15, 15);
+    margin-bottom: 10px;
+}
+aside .recent-articles-container .recent-card-header .title{
+    text-align: center;
+}
+aside .media-recent{
+    width: 100%;
+    max-height: auto;
+    display: flex;
+}
+
+aside .media-recent .meta{
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+/* aside .media-recent .meta .comment{
+    margin: 0;
+    padding: 0;
+    display: flex;
+    border: red solid;
+    
+} */
+
+aside .media-recent .meta span{
+    margin: 0;
+    line-height: 1;
+    font-size: 12px;
+    margin-right: 10px;
+}
+aside .media-recent .title-mb-1 a{
+    font-size: 18px;
+}
+
+aside img {
+    width: 20%;
+    max-height: 70px;
+    margin-right: 10px;
+}
+
+aside .more-link{
+    font-size: 10px;
+}
 
 .blog-area .row div[class^="col"] { margin-bottom: 30px; }
 
@@ -257,6 +433,46 @@ header .blog-area .single-post .title{ padding: auto 0 auto 0; margin-top: 10px;
 .load-more-btn:hover{ transform: translateY(-2px); box-shadow: 5px 10px 20px rgba(0,0,0,.3); }
 
 .article-image {width: 100%; object-fit: cover; height: 500px;background-repeat: no-repeat;}
+
+
+/* -----------------------------------
+TRENDING ARTICLES
+----------------------------------- */
+
+
+.trending-articles{
+    margin: 40px 40px 50px 20px;
+}
+
+ .most-trending-article{
+    display: flex;
+    width: 70%;
+}
+
+.most-trending-article .most-trending-image{
+    /* width: 300vw; */
+    border: #427fed solid;
+    margin: 0 0 0 30px;
+}
+.most-trending-article .most-trending-head{
+    width: 45%;
+}
+.most-trending-article .most-trending-head h4{
+    font-size: 25px;
+    line-height: 1;
+    margin-bottom: 10px;
+}
+.most-trending-article .most-trending-head span{
+    font-size: 12px;
+}
+.most-trending-article .most-trending-head p{
+    font-size: 14px;
+    line-height: 1.5;
+    margin-top: 20px;
+}
+.most-trending-article .most-trending-image img{
+    max-width: 100%;
+}
 
 
 /* ---------------------------------

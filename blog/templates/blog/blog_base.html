@@ -34,117 +34,140 @@
 	<link href="{% static 'blog/css/common-css/bootstrap.css' %}" rel="stylesheet">
 	<link href="{% static 'blog/css/common-css/swiper.css' %}" rel="stylesheet">
 	<link href="{% static 'blog/css/common-css/ionicons.css' %}" rel="stylesheet">
-	<link href="{% static 'blog/css/bona/stylesss.css' %}" rel="stylesheet">
+	<link href="{% static 'blog/css/bona/stylessss.css' %}" rel="stylesheet">
 	<link href="{% static 'blog/css/bona/responsive.css' %}" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'dashboard/author/css/prism.css' %}">
 
     <link href="{% static 'dashboard/author/css/dashboard-article.css' %}" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,600,700,800" rel="stylesheet">
+    
 
     {% endblock stylesheet %}
 
 </head>
 <body >
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
 	<header>
-		<div class="container-fluid position-relative no-side-padding">
-            <div class="header-nav">
-                <a href="{% url 'blog:home' %}" class="logo">
-                    <img src="{% static 'blog/images/logoico.png' %}" alt="Logo Image"></a>
-
-                <div class="menu-nav-icon" data-nav-menu="#main-menu"><i class="ion-navicon"></i></div>
-
-                <ul class="main-menu visible-on-click" id="main-menu">
-                    <li class="blog-categories"><a href="{% url 'blog:categories_list' %}">Categories</a></li>
-                    <div class="blog-area section container">
-                        <h1 class="title display-table-cell" style="color:#0275d8; font-size: 30px; padding: 40px 200px 0 0;"><b><a href="{% url 'blog:categories_list' %}">Categories</a></b></h1>
-                        <!-- {% if categories %} -->
-                        <div class="row" style="margin: 0; padding: 0;">
-                            {% for category in categories %}
-                            <div class="col-lg-2 col-md-6">
-                                <div class="card h-70">
-                                    <div class="single-post post-style-1">
-                
-                                        <div class="blog-image">
-                                            <img src="{{ category.image.url }}"
-                                                width="100" height="60"
-                                                alt="Category Image">
-                                        </div>
-                
-                                        <div class="blog-info">
-                
-                                            <h4 class="title" style="font-size: smaller;"><a href="{{ category.get_absolute_url }}"><b>{{ category.name }}</b></a></h4>
-                
-                                            <ul class="post-footer item">
-                                                <center><li>
-                                                    <i class="ion-ios-albums">
-                                                    </i>{{ category.articles.count }}
-                                                    </li>
-                                            </center>
-                                            </ul>
-                
-                                        </div><!-- article-info -->
-                                    </div><!-- single-post -->
-                                </div><!-- card -->
-                            </div><!-- col-lg-4 col-md-6 -->
-                            {% endfor %}
-                        </div><!-- row -->
-                        <!-- {% else %}
-                        <center><div class="alert alert-info">No Categories</div></center>
-                        {% endif %} -->
-                            {# Pagination for article post #}
-                        {% if is_paginated %}
-                
-                            {# Displays previous pages #}
-                            {% if page_obj.has_previous %}
-                                <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
-                                <a class="btn btn-outline-info mb-4"
-                                href="?page={{ page_obj.previous_page_number }}">Previous
-                                </a>
-                            {% endif %}
-                
-                            {# Displays current page #}
-                            {% for num in page_obj.paginator.page_range %}
-                                {% if page_obj.number == num %}
-                                    <a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>
-                                {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
-                                    <a class="btn btn-outline-info mb-4" href="?page={{ num }}">{{ num }}</a>
-                                {% endif %}
-                            {% endfor %}
-                
-                            {# Displays next pages #}
-                        {% if page_obj.has_next %}
-                                <a class="btn btn-outline-info mb-4"
-                                href="?page={{ page_obj.next_page_number }}">Next
-                                </a>
-                                <a class="btn btn-outline-info mb-4"
-                                href="?page={{ page_obj.paginator.num_pages }}">Last
-                                </a>
-                            {% endif %}
-                
-                        {% endif %}
-                
-                    </div><!-- container -->
-                    <li class="nav-menu-account" style="float: right;">
-                        <li><a href="{% url 'blog:authors_list' %}">Authors</a></li>
-                        <li><a href="{{ request.scheme }}://{{ request.get_host }}/tag/Trending/articles">Trending</a></li>
-                        <!-- <li><a href="#">About</a></li> -->
-                        {% if request.user.is_authenticated %}
-                            <li><a href="{% url 'blog:dashboard_home' %}">Dashboard</a></li>
-                            <li><a href="{% url 'blog:logout' %}">Logout</a></li>
-                        {% else %}
-                            <li><a href="{% url 'blog:login' %}">Login</a></li>
-                        {% endif %}
-                    </li>
-                </ul><!-- main-menu -->
+        <div class="header-container">
+            <div class="personal-account">
+                <li class="nav-menu-account">
+                    {% if request.user.is_authenticated %}
+                        <li><a href="{% url 'blog:dashboard_home' %}" onClick="activateItem(this)">Dashboard</a></li>
+                        <li><a href="{% url 'blog:logout' %}" onClick="activateItem(this)">Logout</a></li>
+                    {% else %}
+                        <li><a href="{% url 'blog:login' %}" onClick="activateItem(this)">Login</a></li>
+                    {% endif %}
+                </li>
             </div>
-		</div><!-- conatiner -->
-        <div class="src-area">
-            <form method="get" action="{% url 'blog:article_search_list_view' %}">
-                <button class="src-btn" type="submit"><i class="ion-ios-search-strong" style="color: #fff;"></i></button>
-                <input class="src-input" type="text" name="q" placeholder="Search for Articles">
-            </form>
+    
+    
+            <div class="container-fluid position-relative no-side-padding">
+                <div class="header-nav" id="app">
+                    <a href="{% url 'blog:home' %}" class="logo">
+                        <img src="{% static 'blog/images/logoico.png' %}" alt="Logo Image"></a>
+    
+                    <div class="menu-nav-icon" data-nav-menu="#main-menu"><i class="ion-navicon"></i></div>
+    
+                    <ul class="main-menu visible-on-click links" id="main-menu">
+                        <!-- <li class="blog-categories"><a href="{% url 'blog:categories_list' %}">Categories</a></li> -->
+                        <li class="nav-menu-account">
+                            <li><a href="{% url 'blog:home' %}" onclick="loadXMLDoc('STATISTICS1.xml')">Home</a></li> 
+                            <li><a href="{{ request.scheme }}://{{ request.get_host }}/tag/Trending/articles" onclick="loadXMLDoc('STATISTICS1.xml')">Trending</a></li>
+                        </li>
+                        <div class="dropdown">
+                            <button class="dropbtn"><li class="blog-categories"><a href="{% url 'blog:categories_list' %}" onclick="loadXMLDoc('STATISTICS1.xml')">Categories<i class="fas fa-angle-down"></i></a></li></button>
+                            <div class="blog-area section container">
+                                <h1 class="title display-table-cell" style="color:#0275d8; font-size: 30px; padding: 40px 200px 0 0;"><b><a href="{% url 'blog:categories_list' %}">Categories</a></b></h1>
+                                <!-- {% if categories %} -->
+                                <div class="row" style="margin: 0; padding: 0;">
+                                    {% for category in categories %}
+                                    <div class="col-row">
+                                        <div class="card h-70">
+                                            <div class="single-post post-style-1">
+                        
+                                                <div class="blog-image">
+                                                    <img src="{{ category.image.url }}"
+                                                        width="100" height="60"
+                                                        alt="Category Image">
+                                                </div>
+                        
+                                                <div class="blog-info">
+                        
+                                                    <h4 class="title" style="font-size: smaller;"><a href="{{ category.get_absolute_url }}"><b>{{ category.name }}</b></a></h4>
+                        
+                                                    <ul class="post-footer item">
+                                                        <center><li>
+                                                            <i class="ion-ios-albums">
+                                                            </i>{{ category.articles.count }}
+                                                            </li>
+                                                    </center>
+                                                    </ul>
+                        
+                                                </div><!-- article-info -->
+                                            </div><!-- single-post -->
+                                        </div><!-- card -->
+                                    </div><!-- col-lg-4 col-md-6 -->
+                                    {% endfor %}
+                                </div><!-- row -->
+                                <!-- {% else %}
+                                <center><div class="alert alert-info">No Categories</div></center>
+                                {% endif %} -->
+                                    {# Pagination for article post #}
+                                {% if is_paginated %}
+                        
+                                    {# Displays previous pages #}
+                                    {% if page_obj.has_previous %}
+                                        <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
+                                        <a class="btn btn-outline-info mb-4"
+                                        href="?page={{ page_obj.previous_page_number }}">Previous
+                                        </a>
+                                    {% endif %}
+                        
+                                    {# Displays current page #}
+                                    {% for num in page_obj.paginator.page_range %}
+                                        {% if page_obj.number == num %}
+                                            <a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>
+                                        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                                            <a class="btn btn-outline-info mb-4" href="?page={{ num }}">{{ num }}</a>
+                                        {% endif %}
+                                    {% endfor %}
+                        
+                                    {# Displays next pages #}
+                                {% if page_obj.has_next %}
+                                        <a class="btn btn-outline-info mb-4"
+                                        href="?page={{ page_obj.next_page_number }}">Next
+                                        </a>
+                                        <a class="btn btn-outline-info mb-4"
+                                        href="?page={{ page_obj.paginator.num_pages }}">Last
+                                        </a>
+                                    {% endif %}
+                        
+                                {% endif %}
+                        
+                            </div><!-- container -->
+                        </div>
+                    </ul><!-- main-menu -->
+                    <script>
+                        $('#app a').on('click', function() {
+                        $('#app a').removeClass('active');
+                        $(this).addClass('active');
+                        });
+    
+                        function loadXMLDoc(x){
+    
+                        }
+                    </script>
+                </div>
+            </div><!-- conatiner -->
+            <div class="src-area">
+                <form method="get" action="{% url 'blog:article_search_list_view' %}">
+                    <button class="src-btn" type="submit"><i class="ion-ios-search-strong" style="color: #fff;"></i></button>
+                    <input class="src-input" type="text" name="q" placeholder="Search for Articles">
+                </form>
+            </div>
         </div>
+
 	</header>
 
     <!-- --------------------------------------------------------------------------------------------------------------------------------
@@ -279,6 +302,7 @@
 	<script src="{% static 'blog/js/common-js/swiper.js' %}"></script>
 	<script src="{% static 'blog/js/common-js/scripts.js' %}"></script>
      <script src="{% static 'blog/js/blog/prism.js' %}"></script>
+     <script src="{% static 'blog/js/blog/blog.js' %}"></script>
 
 
 
