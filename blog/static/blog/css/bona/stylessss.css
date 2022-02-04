@@ -39,6 +39,8 @@ h4{ font-size: 1.2em; }
 h5{ font-size: 1.1em; }
 h6{ font-size: .9em; letter-spacing: 1px; }
 
+.ion-navicon{color: #fff;}
+
 a, button{ display: inline-block; text-decoration: none; color: inherit; transition: all .3s; }
 
 a:focus, a:active, a:hover,
@@ -118,7 +120,7 @@ header{ font-weight: 400; }
 --------------------------------- */
 
 header{ width: 100%; overflow: hidden; background: #000;
-    box-shadow: 0px 2px 10px rgba(0,0,0, .3); position: fixed; top: 0; z-index: 10; }
+    box-shadow: 0px 2px 10px rgba(0,0,0, .3); position: fixed; top: 0; z-index: 1000; }
 
 header .personal-account{
     float: right;
@@ -267,13 +269,17 @@ header .blog-categories:hover + .blog-area{display: block;} */
 /* ----------------------------------
     LATEST NEWS
 ---------------------------------- */
-
+hr{
+    height: 0.05px;
+    background: #999;
+}
 .lastest{
     background: #000;
     display: flex;
-    height: 90vh;
+    height: 120vh;
     margin-top: 120px;
     padding-top: 50px;
+    padding-bottom: 200px;
 }
 
 .lastest .latest-heading{
@@ -290,7 +296,7 @@ header .blog-categories:hover + .blog-area{display: block;} */
 .lastest .latest-heading h4{
     /* background: rgb(169, 15, 15); */
     color: #fff;
-    font-size: 35px;
+    font-size: 2em;
 }
 .lastest .latest-heading .date{
     /* background: rgb(169, 15, 15); */
@@ -298,7 +304,7 @@ header .blog-categories:hover + .blog-area{display: block;} */
 }
 
 .lastest .latest-news-image{
-    width: 70%;
+    width: 800px;
     max-height: 100%;
     margin-right: 10px;
 }
@@ -389,7 +395,7 @@ aside .media-recent .meta span{
     margin-right: 10px;
 }
 aside .media-recent .title-mb-1 a{
-    font-size: 18px;
+    font-size: 0.8em;
 }
 
 aside img {
@@ -404,7 +410,7 @@ aside .more-link{
 
 .blog-area .row div[class^="col"] { margin-bottom: 30px; }
 
-.blog-area{ text-align: center; background: #EDF3F3; }
+.blog-area{ text-align: center; background: #ffffff; }
 
 .blog-area .single-post{ height: 100%; position: relative; padding-bottom: 45px;
 	overflow: hidden; box-shadow: 0px 0px 5px rgba(0,0,0,.1); border: 1px solid #ddd; background: #fff; }
@@ -441,34 +447,69 @@ TRENDING ARTICLES
 
 
 .trending-articles{
-    margin: 40px 40px 50px 20px;
+    margin: 40px 70px 50px 20px;
 }
 
  .most-trending-article{
     display: flex;
-    width: 70%;
+    align-items: center;
+    justify-content: center;
+    width: 800px;
+    flex: 1 1 auto;
 }
 
 .most-trending-article .most-trending-image{
-    /* width: 300vw; */
-    border: #427fed solid;
     margin: 0 0 0 30px;
+    width: 600px;
 }
+.other-trending-articles{
+    width: 70%;
+}
+.other-trending-articles .other-trending-articles-card{
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: space-evenly;
+}
+.other-trending-articles .other-trending-articles-card .other-trending-container{
+    width: 300px;
+    margin: 30px 10px 5px 0;
+}
+.article-accessories{
+    display: flex;
+}
+.article-accessories li{
+    margin-right: 20px;
+}
+.other-trending-articles .other-trending-articles-image{
+    width: 100%;
+}
+
+.other-trending-articles .other-trending-articles-image img{
+    max-width: 100%;
+}
+
 .most-trending-article .most-trending-head{
-    width: 45%;
+    width: 400px;
 }
 .most-trending-article .most-trending-head h4{
-    font-size: 25px;
+    font-size: 1.5em;
     line-height: 1;
     margin-bottom: 10px;
 }
 .most-trending-article .most-trending-head span{
-    font-size: 12px;
+    font-size: 0.8em;
 }
 .most-trending-article .most-trending-head p{
-    font-size: 14px;
+    font-size: 1em;
     line-height: 1.5;
     margin-top: 20px;
+}
+li{
+    list-style: none;
+}
+i{
+    margin-right: 4px;
 }
 .most-trending-article .most-trending-image img{
     max-width: 100%;
@@ -553,7 +594,7 @@ TRENDING ARTICLES
 
 .recomended-area .row div[class^="col"] { margin-bottom: 30px; }
 
-.recomended-area{ text-align: center; background: #EDF3F3; }
+.recomended-area{ text-align: center; background: #ffffff; }
 
 .recomended-area .single-post{ height: 100%; position: relative; padding-bottom: 45px;
 	overflow: hidden; box-shadow: 0px 0px 5px rgba(0,0,0,.1); border: 1px solid #ddd; background: #fff; }
@@ -659,6 +700,8 @@ footer .footer-section ul > li{ margin-right: 10px; margin-top: 10px; }
 
 footer .footer-section li{ list-style: none; display: inline-block; }
 
+.footer-section .icons div i{margin-right: 20px; width: 50px;}
+
 footer .copyright{ margin: 10px 0; }
 
 
@@ -678,7 +721,7 @@ footer .input-area .email-input:focus{ box-shadow: 0px 0px 1px #aaa; }
 footer .input-area .submit-btn{ position: absolute; top: 0; bottom: 0; right: 0; width: 50px; background: none; 
 	border: 0; outline: 0; margin-right: 10px; opacity: .8; cursor: pointer; transition: all .2s; }
 
-
+    footer .input-area .submit-btn i{ color: #000;}
 
 
 

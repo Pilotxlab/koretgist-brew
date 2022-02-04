@@ -73,7 +73,7 @@
                         <!-- <li class="blog-categories"><a href="{% url 'blog:categories_list' %}">Categories</a></li> -->
                         <li class="nav-menu-account">
                             <li><a href="{% url 'blog:home' %}" onclick="loadXMLDoc('STATISTICS1.xml')">Home</a></li> 
-                            <li><a href="{{ request.scheme }}://{{ request.get_host }}/tag/Trending/articles" onclick="loadXMLDoc('STATISTICS1.xml')">Trending</a></li>
+                            <!-- <li><a href="{{ request.scheme }}://{{ request.get_host }}/tag/Trending/articles" onclick="loadXMLDoc('STATISTICS1.xml')">Trending</a></li> -->
                         </li>
                         <div class="dropdown">
                             <button class="dropbtn"><li class="blog-categories"><a href="{% url 'blog:categories_list' %}" onclick="loadXMLDoc('STATISTICS1.xml')">Categories<i class="fas fa-angle-down"></i></a></li></button>
@@ -214,60 +214,25 @@
 
         <footer>
 
-		<div class="container">
-			<div class="row">
+		<div class="container" style="background: #000; color: #fff; width: 100%;">
+			<div class="row" style="display: flex; justify-content: space-evenly; padding-top: 50px;">
 
-				<div class="col-lg-4 col-md-6">
+                <div class="col-lg-4-col-md-6">
 					<div class="footer-section">
-
-						<a class="logo" href="#"
-                            <img src="{% static 'blog/images/logo.png' %}" alt="Logo Image"></a>
-						<p class="copyright">Bona @ 2018 - 2020. All rights reserved.</p>
-
-						<ul class="icons">
-							<li><a href="#">
-                                <i class="ion-social-facebook-outline"></i>
-                               </a>
-                            </li>
-							<li><a href="#">
-                                <i class="ion-social-twitter-outline">
-                                </i>
-                                </a>
-                            </li>
-							<li><a href="#">
-                                <i class="ion-social-instagram-outline">
-                                </i>
-                                </a>
-                            </li>
-							<li><a href="#">
-                                <i class="ion-social-vimeo-outline">
-                                </i>
-                                </a>
-                            </li>
-							<li><a href="#">
-                                <i class="ion-social-pinterest-outline"></i>
-                                </a>
-                            </li>
-						</ul>
-
-					</div><!-- footer-section -->
-				</div><!-- col-lg-4 col-md-6 -->
-
-				<div class="col-lg-4 col-md-6">
-						<div class="footer-section">
-						<h4 class="title"><b>MENU</b></h4>
-						<ul>
-							<li><a href="{% url 'blog:login' %}">Login</a></li>
-							<li><a href="#">HEALTH</a></li>
-							<li><a href="#">MUSIC</a></li>
-						</ul>
-						<ul>
-                            <li><a href="{% url 'blog:register' %}">Sign Up</a></li>
-							<li><a href="#">DESIGN</a></li>
-							<li><a href="#">TRAVEL</a></li>
-						</ul>
-					</div><!-- footer-section -->
-				</div><!-- col-lg-4 col-md-6 -->
+                        <h4>CATEGORIES</h4>
+                        {% if categories %}
+                        {% for category in categories %}
+                        
+                            <div class="display-table-cell" style="display: block;">
+                                <a href="{{category.get_absolute_url}}"><b>{{ category.name }}</b></a>
+                            </div>
+                                    
+                        {% endfor %}
+                        {% else %}
+                            <center><div class="alert alert-warning"><b>No Categories</b></div></center>
+                        {% endif %}
+                    </div>
+                </div>
 
 				<div class="col-lg-4 col-md-6">
 					<div class="footer-section">
@@ -286,8 +251,54 @@
 					</div><!-- footer-section -->
 				</div><!-- col-lg-4 col-md-6 -->
 
+                <div class="col-lg-4-col-md-6">
+					<div class="footer-section">
+						<h4 class="title"><b>CREATE ACCOUNT</b></h4>
+						<ul>
+							<li><a href="{% url 'blog:login' %}">Login</a></li>
+                            <li><a href="{% url 'blog:register' %}">Sign Up</a></li>
+						</ul>
+					</div><!-- footer-section -->
+				</div><!-- col-lg-4 col-md-6 -->
+
 			</div><!-- row -->
+            <div class="col-lg-4-col-md-6">
+                <div class="footer-section" style="display:flex; justify-content: center; align-items: center;">
+                    <h6 style="margin-right: 20px;">CONNECT WITH US :</h6>
+                    <div class="icons" style="display: flex; flex-wrap: wrap;">
+                        <div><a href="#">
+                            <i class="ion-social-facebook-outline"></i>
+                           </a>
+                        </div>
+                        <div><a href="#">
+                            <i class="ion-social-twitter-outline">
+                            </i>
+                            </a>
+                        </div>
+                        <div><a href="#">
+                            <i class="ion-social-instagram-outline">
+                            </i>
+                            </a>
+                        </div>
+                        <div><a href="#">
+                            <i class="ion-social-vimeo-outline">
+                            </i>
+                            </a>
+                        </div>
+                        <div><a href="#">
+                            <i class="ion-social-pinterest-outline"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                </div><!-- footer-section -->
+            </div><!-- col-lg-4 col-md-6 -->
 		</div><!-- container -->
+        <div class="footer-copyright-div" style="display: flex; justify-content: center; width: 100%; align-items: center;">
+            <a class="logo" href="#"><img src="{% static 'blog/images/logoico.png' %}" alt="Logo Image" style="width: 30px; margin-right: 20px;"></a>
+            <p class="copyright">&copy; Koretgist @ 2022. All rights reserved.</p>
+        </div>
+        
 	</footer>
 
  {% endblock footer %}

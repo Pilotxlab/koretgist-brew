@@ -83,56 +83,18 @@
                                         <img class="img-fluid-recent" src="{{ article.image.url }}" alt="image">
                                         <div class="media-body" style="margin: 0; padding: 0;">
                                             <h3 class="title-mb-1"><a href="{{article.get_absolute_url}}">{{ article.title }}</a></h3>
-                                            <div class="meta"><span class="date"><b>Published:</b>  <i>{{ article.date_published|timesince|upto:',' }} ago</i></span>
+                                            <div class="meta">
+                                                <span class="date"><b>Published:</b>  <i>{{ article.date_published|timesince|upto:',' }} ago</i></span>
                                                 <span class="time">{{ article.count_words }} word{{ article.count_words|pluralize }}</span>
                                                 <span class="time">{{ article.read_time }} min{{ article.read_time|pluralize }} read</span>
                                                 <span class="comment">{{ article.views }} view{{ article.views|pluralize }}</span>
                                                 <span class="comment"><a href="{% url 'blog:article_comments' article.slug %}">{{ article.comments.count }} comment{{ article.comments.count|pluralize }}</a></span>
-                                                <!-- <span class="time">
-                                                <i class="fas fa-chevron-down" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                </i>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="{% url 'blog:article_update' slug=article.slug %}">Edit Article</a>
-                                                    <div class="dropdown-divider w-100" ></div>
-                                                    <a data-toggle="modal" data-target="#deleteModal" class="dropdown-item" href="javascript:void(0)">Delete Article</a>
-                                                </div>
-                                                </span> -->
                                             </div>
                                             <a class="more-link" href="{{article.get_absolute_url}}">View details &rarr;</a>
                                             <hr class="solid"><!-- Solid divider -->
                                         </div><!--//media-body-->
                                     </div><!--//media-->
                                 </div><!--//item-->
-                                    <!-- <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel"><b>Ready to Delete Article?</b></h5>
-                                            <button
-                                                class="close"
-                                                type="button"
-                                                data-dismiss="modal"
-                                                aria-label="Close"
-                                            >
-                                                <span aria-hidden="true"> × </span>
-                                            </button>
-                                            </div>
-                                            <div class="modal-body">
-                                            Select "Delete Article" below if you want to delete the article.
-                                            </div>
-                                            <div class="modal-footer">
-                                            <button
-                                                class="btn btn-secondary"
-                                                type="button"
-                                                data-dismiss="modal"
-                                            >
-                                                Cancel
-                                            </button>
-                                            <a class="btn btn-danger" href="{% url 'blog:article_delete' slug=article.slug %}">Delete Article</a>
-                                            </div>
-                                        </div>
-                                        </div>
-                                </div> -->
                             {% endfor %}
                             </div>
                         {% else %}
@@ -154,15 +116,17 @@
                                                 SECTION THREE: TRENDING ARTICLES
         -------------------------------------------------------------------------------------------------------------------------------- -->
 
-
-        <section class="trending-articles">
+        
+        <section class="trending-articles" style="margin-bottom: 0;">
+            <h2 style="color: #fff; background: rgb(169, 15, 15); font-size: 3em; width: fit-content; padding: auto 10px 0 10px; margin-bottom: 50px;">
+                TRENDING</h2>
             <div class="trending-articles-container">
                 <div class="most-trending-article">
                     <div class="most-trending-head">
                         <h4><a href="{{most_trending_article.get_absolute_url}}">{{ most_trending_article.title }}</a></h4>
                         <span class="date"><b>Published:</b><i>{{ most_trending_article.date_published|timesince|upto:',' }} ago</i></span>
                         <li><i class="ion-eye" style="font-size: smaller;"></i>{{ most_trending_article.views }}</li>
-                        <p>{{most_trending_article.body|truncatewords:50}}</p>
+                        <p> {{most_trending_article.body|truncatewords:50}} </p>
                     </div>
                     <div class="most-trending-image">
                         <img src="{{most_trending_article.image.url}}" alt="Most Trending Article Image">
@@ -170,17 +134,24 @@
                 </div>
                 <div class="other-trending-articles">
                     {% if other_trending_articles %}
-                        {% for article in other_trending_articles %}
-                            <div class="trending-articles">
-                                <img src="{{article.image.url}}" alt="{{article.title}}">
+                        <div class="other-trending-articles-card">
+                            {% for article in other_trending_articles %}
+                            <div class="other-trending-container">
+                                <div class="other-trending-articles-image">
+                                    <img src="{{article.image.url}}" alt="{{article.title}}">
+                                </div>
+                                <div>
+                                    <h6><a href="{{article.get_absolute_url}}"></a>{{article.title}}</h6>
+                                    <div class="article-accessories">
+                                        <li><a style="font-size: smaller;"><i class="ion-ios-clock"></i>{{ article.read_time }} min{{ article.read_time|pluralize }} read</a></li>
+                                        <li><i class="ion-chatbubbles" style="font-size: smaller;"></i>{{ article.comments.count }}</li>
+                                        <li><i class="ion-eye" style="font-size: smaller;"></i>{{ article.views }}</li>
+                                    </div>
+                                </div>
                             </div>
-                            <div>
-                                <h4><a href="{{article.get_absolute_url}}"></a>{{article.title}}</h4>
-                                <li><a style="font-size: smaller;"><i class="ion-ios-clock"></i>{{ article.read_time }} min{{ article.read_time|pluralize }} read</a></li>
-                                <li><i class="ion-chatbubbles" style="font-size: smaller;"></i>{{ article.comments.count }}</li>
-                                <li><i class="ion-eye" style="font-size: smaller;"></i>{{ article.views }}</li>
-                            </div>
+                            
                         {% endfor %}
+                        </div>
                     {% else %}
                     <div class="alert alert-warning"><b>No Trending Articles</b></div>
                     {% endif %}
@@ -191,6 +162,7 @@
 
 
         </section>
+        <hr class="solid">
 
 
 
@@ -203,59 +175,171 @@
         <!-- --------------------------------------------------------------------------------------------------------------------------- -->
 
     <section class="blog-area section">
-        <div class="container" style="display: flex;">
+        <h2 style="color: #fff; background: rgb(169, 15, 15); font-size: 3em; width: fit-content; padding: auto 10px 0 10px; margin: 0 0 50px 20px;">
+            CATEGORIES</h2>
+        <div class="container" style="display: flex; width: 100%;margin: 0; background-color: rgb(0, 0, 0);">
            
             <div class="row-category-container" style="display: flex; justify-content: center; align-items: center; 
-            width: 100%; padding: 0; margin: 0; background-color: rgb(115, 115, 145);"> 
+            width: 100%; padding: 0; margin: 0; "> 
                     {% if categories %}
                         <div class="row-category" style="width: 100%;">
                             
                             {% for category in categories %}
                                 
                                 {% if articles %}
-                                        <h2 class="title" style="margin: 10px 0 0 0; padding: 0; text-transform: uppercase;
-                                         font-size: 25px; font-weight: bolder; background-color: rgb(255, 255, 255);">
-                                            <a href="{{ category.get_absolute_url }}"><b>{{ category.name }}</b></a></h2>
+                                        <h2 class="title" style="margin: 200px 0 50px 15%; padding: 0; text-transform: uppercase; width: 70%;
+                                         font-size: 25px; font-weight: bolder; background-color: rgb(169, 15, 15); color: #fff;">
+                                            <a href="{{ category.get_absolute_url }}"><b>{{category.id}}.  {{ category.name }}</b></a></h2>
+                                            
                                         <div class="category-wrap-contanier" style="max-width: 100%; display: flex; flex-direction: row; flex-wrap: wrap;">
-                                            {% for article in articles %}
+                                             {% for article in articles|slice:":50" %}
                                                 
                                                 {% if category.name == article.category.name %}
-                                                <div class="flex-container" style="width: 300px; height: auto; margin-left: 10px;">
-                                                    <div class="category-card-container" style="width: 100%; max-height: 100%; padding: 0; margin: 0;">
-                                                        <div class="card h-100" style="width: 100%; height: 100%;">
-                                                            <div class="single-post post-style-1" style="width: 100%; height: 250px;">
+                                                    
+                                                    {% if article.id == category.id or forloop.counter == article.id %}
+                                                        <div class="most-trending-article" style="margin: 20px;">
+                                                            <div class="most-trending-head">
+                                                                <h4 style="color: #fff; font-size: 30px;"><a href="{{article.get_absolute_url}}">{{ article.title }}</a></h4>
+                                                                <span class="date" style="color: #fff;"><b>Published:</b><i>{{ article.date_published|timesince|upto:',' }} ago</i></span>
+                                                                <li style="color: #fff;"><i class="ion-eye" style="font-size: smaller;"></i>{{ article.views }}</li>
+                                                                <p> {{article.body|truncatewords:50}} </p>
+                                                            </div>
+                                                            <div class="most-trending-image" style="max-width: 800px;">
+                                                                <img src="{{article.image.url}}" alt="{{ article.title }}">
+                                                            </div>
+                                                        </div>
+                                                    {% else %}
+                                                    
+                                      
+                                                    <div class="flex-container" style="width: 300px; height: auto; margin-left: 10px;margin-right: 10px;">
+                                                        <div class="category-card-container" style="width: 100%; max-height: 100%; padding: 0; margin: 0;">
+                                                            <div class="card h-100" style="width: 100%; height: 100%;">
+                                                                <div class="single-post post-style-1" style="width: 100%; height: 250px;">
 
-                                                                <div class="blog-image">
-                                                                    <img src="{{ article.image.url }}"
-                                                                        width="100%" height="100px"
-                                                                        style = "background-repeat: no-repeat; background-size: cover;"
-                                                                        alt="Blog Image">
-                                                                </div>
+                                                                    <div class="blog-image">
+                                                                        <img src="{{ article.image.url }}"
+                                                                            width="100%" height="150px"
+                                                                            style = "background-repeat: no-repeat; background-size: cover;"
+                                                                            alt="Blog Image">
+                                                                    </div>
 
-                                                                <a class="avatar" href="{% url 'blog:author_articles' article.author.username %}"><img src="{{ article.author.profile.image.url }}"
-                                                                                                alt="Profile Image" class="profile-image">
-                                                                </a>
+                                                                    <!-- <a class="avatar" href="{% url 'blog:author_articles' article.author.username %}"><img src="{{ article.author.profile.image.url }}"
+                                                                                                    alt="Profile Image" class="profile-image">
+                                                                    </a> -->
 
-                                                                <div class="blog-info">
+                                                                    <div class="blog-info">
 
-                                                                    <h6 class="title" style="padding: 0; margin: 0 0 20px 0; font-size: small;"><a href="{{ article.get_absolute_url }}"><b>{{ article.title }}</b></a></h4>
+                                                                        <h6 class="title" style="padding: 0; margin: 10px 0 20px 0; font-size: small;"><a href="{{ article.get_absolute_url }}"><b>{{ article.title }}</b></a></h4>
 
-                                                                    <ul class="post-footer" style=" display: flex; align-items: center; justify-content: center; width: 100%; height: 30px;">
-                                                                        <li><a style="font-size: smaller;"><i class="ion-ios-clock"></i>{{ article.read_time }} min{{ article.read_time|pluralize }} read</a></li>
-                                                                        <li><i class="ion-chatbubbles" style="font-size: smaller;"></i>{{ article.comments.count }}</li>
-                                                                        <li><i class="ion-eye" style="font-size: smaller;"></i>{{ article.views }}</li>
-                                                                    </ul>
+                                                                        <ul class="post-footer" style=" display: flex; align-items: center; justify-content: center; width: 100%; height: 30px;">
+                                                                            <li><a style="font-size: smaller;"><i class="ion-ios-clock"></i>{{ article.read_time }} min{{ article.read_time|pluralize }} read</a></li>
+                                                                            <li><i class="ion-chatbubbles" style="font-size: smaller;"></i>{{ article.comments.count }}</li>
+                                                                            <li><i class="ion-eye" style="font-size: smaller;"></i>{{ article.views }}</li>
+                                                                        </ul>
 
-                                                                </div><!-- article-info -->
-                                                            </div><!-- single-post -->
-                                                        </div><!-- card -->
-                                                    </div><!-- col-lg-4 col-md-6 -->
-                                                </div>
+                                                                    </div><!-- article-info -->
+                                                                </div><!-- single-post -->
+                                                            </div><!-- card -->
+                                                        </div><!-- col-lg-4 col-md-6 -->
+                                                    </div>
+                                                    {% endif %}
                                                 {% else %}
                                                     <p></p>
                                                 {% endif %}
                                             {% endfor %}
                                         </div>
+                                {% else %}
+                                    <p></p>
+                                {% endif %}
+                            
+                            {% endfor %}
+                    </div><!-- row -->
+                    {% else %}
+                        <p></p>
+                    {% endif %}
+            </div><!-- row -->
+
+                {# Pagination for article post #}
+            {% if is_paginated %}
+
+                {# Displays previous pages #}
+                {% if page_obj.has_previous %}
+                    <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
+                    <a class="btn btn-outline-info mb-4"
+                    href="?page={{ page_obj.previous_page_number }}">Previous
+                    </a>
+                {% endif %}
+
+                {# Displays current page #}
+                {% for num in page_obj.paginator.page_range %}
+                    {% if page_obj.number == num %}
+                        <a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>
+                    {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                        <a class="btn btn-outline-info mb-4" href="?page={{ num }}">{{ num }}</a>
+                    {% endif %}
+                {% endfor %}
+
+                {# Displays next pages #}
+            {% if page_obj.has_next %}
+                    <a class="btn btn-outline-info mb-4"
+                    href="?page={{ page_obj.next_page_number }}">Next
+                    </a>
+                    <a class="btn btn-outline-info mb-4"
+                    href="?page={{ page_obj.paginator.num_pages }}">Last
+                    </a>
+                {% endif %}
+
+            {% endif %}
+
+        </div><!-- container -->
+
+    </section>
+
+    <section class="blog-area section">
+        <div class="container" style="display: flex; width: 100%; margin: 0;background-color: rgb(169, 15, 15);">
+           
+            <div class="row-category-container" style=" 
+            width: 100%; padding: 0; margin: 0; height: auto;"> 
+                    {% if categories %}
+                        <div class="row-category" style="width: 100%; display: flex; flex-wrap: wrap; justify-content: space-evenly;">
+                            
+                            {% for category in categories %}
+                                
+                                {% if articles %}
+                                        <div class="category-article-list-container" style="width: 400px; margin-left: 10px; margin-bottom: 50px;">
+                                            <h2 class="title" style="margin: 10px 0 0 0; padding: 0; text-transform: uppercase;
+                                            font-size: 20px; font-weight: bolder; color: rgb(255, 255, 255);">
+                                               <a href="{{ category.get_absolute_url }}"><b>{{category.id}}.  {{ category.name }}</b></a></h2>
+                                            
+                                            <!-- {% if articles|first %} -->
+                                                <div style="margin: 10px 0 10px 0; height: 150px;">
+                                                    <img src="{{category.image.url}}" style="max-height: 100%;" alt="{{category.title}}">
+                                                </div>
+                                            <!-- {% endif %} -->
+                                           <div class="category-wrap-contanier" style="max-width: 100%; display: flex; flex-direction: column; 
+                                           justify-content: left; align-items: flex-start; text-align: left;">
+                                                {% for article in articles|slice:":50" %}
+                                                   
+                                                   {% if category.name == article.category.name %}
+                                                       <div class="category-article-title-list">
+                                                           <div class="article-title-list">
+                                                               <ol>
+                                                                   <h6 style="color: rgb(211, 211, 211);"><a href="{{ article.get_absolute_url }}">{{article.title}}</a></h6>
+                                                               </ol>
+                                                           </div>
+                                                           
+                                                       </div>
+                                                       
+   
+                                                   {% else %}
+                                                       <p></p>
+                                                   {% endif %}
+                                               {% endfor %}
+                                           </div>
+                                           <hr class="solid">
+                                        </div>
+                                        
+
                                 {% else %}
                                     <p></p>
                                 {% endif %}

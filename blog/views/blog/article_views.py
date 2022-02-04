@@ -21,33 +21,41 @@ class ArticleListView(ListView):
     paginate_by = 12
     queryset = Article.objects.filter(status=Article.PUBLISHED, deleted=False)
     template_name = "blog/article/home.html"
-    
+    articles = context_object_name
 
     def get_context_data(self, *args, **kwargs):
+
+        articles = Article.objects.all()
+
+        enumerate_articles = enumerate(articles)
+
         context = super().get_context_data(**kwargs)
+        context['categories'] = Category.objects.filter(approved=True)
+        categories = Category.objects.filter(approved=True)
 
         recent_articles = Article.objects.filter(
-            status=Article.PUBLISHED, deleted=False).order_by("-date_published")[:5]
+            status=Article.PUBLISHED, deleted=False).order_by("-date_published")[:10]
 
         latest = Article.objects.filter(
             status=Article.PUBLISHED, deleted=False).order_by("-date_published")[0]
 
         
+        articles_list = Article.objects.filter(status=Article.PUBLISHED, deleted=False)
 
         trending_article_list = Article.objects.filter(status=Article.PUBLISHED, deleted=False).order_by('views')
 
         most_trending_article = trending_article_list[len(trending_article_list)-1]
-        other_trending_articles = trending_article_list[1:10]
+        other_trending_articles = trending_article_list[0:len(trending_article_list)-2]
+
+        number_of_articles = len(articles)
+        category_range = range(len(categories))
 
         # context['tag_articles_list'] = tag_articles_list
-        context={
-                'recent_articles': recent_articles,
-                'latest': latest,
-                'most_trending_article': most_trending_article,
-                'other_trending_articles': other_trending_articles,
-                'categories':  Category.objects.filter(approved=True)
-
-            }
+        context['recent_articles'] = recent_articles
+        context['latest'] = latest
+        context['most_trending_article'] =  most_trending_article
+        context['enumerate_articles'] =  enumerate_articles
+        context['other_trending_articles'] =  other_trending_articles
         return context
 
 

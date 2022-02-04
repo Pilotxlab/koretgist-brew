@@ -22,6 +22,7 @@
 
 	/* COMMoNS */
 
+
 	.no-left-padding{ padding-left: 15px; }
 
 	.no-right-padding{ padding-right: 15px; }
@@ -31,11 +32,19 @@
 
 	/* SEARCH AREA */
 
-	header .src-area{ width: 30%; }
+	/* header .src-area{ width: 30%; } */
 
 	/* ---------------------------------
 	6. MAIN POST
 	--------------------------------- */
+
+	aside{
+		float: none;
+		width: 100%;
+	}
+	.other-trending-articles{
+		width: 100%;
+	}
 
 	.main-post .post-top-area,
 	.main-post .post-bottom-area{ margin: 30px; }
@@ -75,8 +84,18 @@
 
 	.section{ padding: 40px 0 10px; }
 
+	.lastest{flex-direction: column;}
 
+	.most-trending-article{
+		flex-direction: column-reverse;}
 
+	aside{
+		float: none;
+		width: 100%;
+	}
+	.other-trending-articles{
+		width: 100%;
+	}
 	/* ---------------------------------
 	3. MENU
 	--------------------------------- */
@@ -142,6 +161,19 @@
 	6. MAIN POST ( LEF AREA )
 	--------------------------------- */
 
+	.lastest{flex-direction: column;}
+	.most-trending-article{
+		flex-direction: column-reverse;
+	}
+	.other-trending-articles{
+		width: 100%;
+	}
+
+	aside{
+		float: none;
+		width: 100%;
+	}
+
 	/* ICONS */
 
 	.main-post ul.post-icons,
@@ -158,6 +190,14 @@
 -------------------------------------------------------------------------- */
 @media only screen and (max-width: 359px) {
 
+	aside{
+		float: none;
+		width: 100%;
+	}
+
+	.other-trending-articles{
+		width: 100%;
+	}
 
 }
 
