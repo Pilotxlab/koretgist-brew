@@ -43,8 +43,8 @@ INSTALLED_APPS = [
     'taggit',
     'django.contrib.sites',
     'django_filters',
-    #'rest_framework',
-    #'crispy_forms',
+    'rest_framework',
+    'crispy_forms',
     #'blog.apps.BlogConfig',
 ]
 

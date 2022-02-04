@@ -36,7 +36,7 @@ class UserRegisterView(View):
             user.save()
 
             current_site = get_current_site(request)
-            subject = 'Activate Account'
+            subject = 'Activate Your Bona Blog Account'
             message = render_to_string('account/account_activation_email.html',
             {
                 'user': user,
@@ -45,11 +45,6 @@ class UserRegisterView(View):
                 'token': account_activation_token.make_token(user),
             })
             user.email_user(subject, message)
-
-            messages.success(request, f"Congratulations {username} !!! "
-                                      f"A mail has been sent to you "
-                                      f"Please activate your account"
-                             )
 
             return redirect('blog:account_activation_sent')
 
@@ -69,7 +64,7 @@ class ActivateView(View):
 
     def get(self, request, uidb64, token):
         try:
-            uid = force_text(urlsafe_base64_decode(uidb64))
+            uid = force_str(urlsafe_base64_decode(uidb64))
             user = User.objects.get(pk=uid)
         except (TypeError, ValueError, OverflowError, User.DoesNotExist):
             user = None
