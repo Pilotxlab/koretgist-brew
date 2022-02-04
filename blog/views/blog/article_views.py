@@ -31,10 +31,15 @@ class ArticleListView(ListView):
 
         context = super().get_context_data(**kwargs)
         context['categories'] = Category.objects.filter(approved=True)
+
+        global categories
+        
         categories = Category.objects.filter(approved=True)
 
+        
+
         recent_articles = Article.objects.filter(
-            status=Article.PUBLISHED, deleted=False).order_by("-date_published")[:10]
+            status=Article.PUBLISHED, deleted=False).order_by("-date_published")[:5]
 
         latest = Article.objects.filter(
             status=Article.PUBLISHED, deleted=False).order_by("-date_published")[0]
@@ -75,6 +80,7 @@ class ArticleDetailView(DetailView):
 
         kwargs['article'] = self.object
         kwargs['comment_form'] = CommentForm()
+        kwargs['categories'] = Category.objects.filter(approved=True)
         return super().get_context_data(**kwargs)
 
 

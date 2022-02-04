@@ -132,7 +132,7 @@
                         <img src="{{most_trending_article.image.url}}" alt="Most Trending Article Image">
                     </div>
                 </div>
-                <div class="other-trending-articles">
+                <div class="other-trending-articles" style="border-right: 0.5px solid rgb(146, 145, 145);">
                     {% if other_trending_articles %}
                         <div class="other-trending-articles-card">
                             {% for article in other_trending_articles %}
@@ -174,10 +174,13 @@
 
         <!-- --------------------------------------------------------------------------------------------------------------------------- -->
 
-    <section class="blog-area section">
-        <h2 style="color: #fff; background: rgb(169, 15, 15); font-size: 3em; width: fit-content; padding: auto 10px 0 10px; margin: 0 0 50px 20px;">
+
+
+    <section class="blog-area section" style="margin-bottom: 0; padding-bottom: 0;">
+        <h2 style="color: #fff; background: rgb(169, 15, 15); font-size: 3em; width: fit-content; padding: 10px 10px 0 10px; margin: 10px 0 0 0; height: fit-content;">
             CATEGORIES</h2>
-        <div class="container" style="display: flex; width: 100%;margin: 0; background-color: rgb(0, 0, 0);">
+        <div class="container" style="display: flex; width: 100%; margin: 0; background-color: rgb(0, 0, 0); padding-bottom: 50px;">
+
            
             <div class="row-category-container" style="display: flex; justify-content: center; align-items: center; 
             width: 100%; padding: 0; margin: 0; "> 
@@ -187,8 +190,8 @@
                             {% for category in categories %}
                                 
                                 {% if articles %}
-                                        <h2 class="title" style="margin: 200px 0 50px 15%; padding: 0; text-transform: uppercase; width: 70%;
-                                         font-size: 25px; font-weight: bolder; background-color: rgb(169, 15, 15); color: #fff;">
+                                        <h2 class="title" style="margin: 100px 0 50px 15%; padding: 0; text-transform: uppercase; width: 70%;
+                                         font-size: 25px; font-weight: bolder; color: rgb(169, 15, 15);">
                                             <a href="{{ category.get_absolute_url }}"><b>{{category.id}}.  {{ category.name }}</b></a></h2>
                                             
                                         <div class="category-wrap-contanier" style="max-width: 100%; display: flex; flex-direction: row; flex-wrap: wrap;">
@@ -295,8 +298,8 @@
 
     </section>
 
-    <section class="blog-area section">
-        <div class="container" style="display: flex; width: 100%; margin: 0;background-color: rgb(169, 15, 15);">
+    <section class="blog-area section" style="margin-top: 0; padding-top: 0;">
+        <div class="container" style="display: flex; width: 100%; margin: 0; padding-top: 100px; background-color: rgb(169, 15, 15);">
            
             <div class="row-category-container" style=" 
             width: 100%; padding: 0; margin: 0; height: auto;"> 
@@ -386,6 +389,46 @@
         </div><!-- container -->
 
     </section>
+
+
+    <!-- --------------------------------------------------------------------------------------------------------------------------------
+    MORE News
+    -------------------------------------------------------------------------------------------------------------------------------- -->
+
+
+    <section class="more-news-table" style="margin-top: 100px;">
+        <h2>MORE NEWS...</h2>
+        <table class="news-table">
+            <thead class="news-table-head">
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </thead>
+            
+            <tbody>
+                <!-- {% if categories %} -->
+                    {% for category in categories %}
+                        <!-- {% if articles %} -->
+                            {% for article in articles|slice:":50" %}
+                                {% if category.name == article.category.name %}
+                                    <tr class="news-table-row">
+                                        <td class="table-news-category">{{ article.category }}</td>
+                                        <td class="table-news-image"><img src="{{article.image.url}}" alt="{{article.title}}"></td>
+                                        <td class="table-news-title">{{ article.title }}</td>
+                                        <td class="table-news-body">{{ article.body|truncatewords:50}}</td>
+                                        <td class="table-news-pubdate">{{ article.date_published|timesince|upto:',' }} ago</td>
+                                    </tr>
+                                {% endif %}
+                            {% endfor %}
+                        <!-- {% endif %} -->
+                    {% endfor %}
+                <!-- {% endif %} -->
+            </tbody>
+        </table>
+
+    </section>    
 
 {% endblock content %}
 
