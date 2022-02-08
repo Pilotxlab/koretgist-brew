@@ -160,12 +160,12 @@ header .main-menu li > a{ padding: 0 25px;
     color: rgb(191, 191, 191);
 }
 
-#app li a:hover{ color: rgba(255, 44, 44);}
+#app li a:hover{ color: rgb(255, 44, 44);}
 
 
 header .main-menu > li:first-child > a{ border-left: 1px solid #eee; }
 
-#app a .active{color: rgb(0, 0, 0); background: rgb(85, 83, 83);}
+header #app a .active{border-bottom: 2px solid rgb(169, 15, 15);}
 
 header .visible.main-menu{ display: block; }
 

@@ -82,3 +82,13 @@ function postArticle(articleURl, articleData) {
   });
 }
 
+
+// const navigationMenu = document.querySelectorAll("#app .menu");
+
+// function reveal() {
+//     navigationMenu[0].classList.toggle('active');
+//     navigationMenu[1].classList.toggle('active');
+//     navigationMenu.style.borderBottom = '2px solid red';
+// }
+
+// navigationMenu.onclick = reveal;

@@ -53,10 +53,10 @@
             <div class="personal-account">
                 <li class="nav-menu-account">
                     {% if request.user.is_authenticated %}
-                        <li><a href="{% url 'blog:dashboard_home' %}" onClick="activateItem(this)">Dashboard</a></li>
-                        <li><a href="{% url 'blog:logout' %}" onClick="activateItem(this)">Logout</a></li>
+                        <li><a href="{% url 'blog:dashboard_home' %}">Dashboard</a></li>
+                        <li><a href="{% url 'blog:logout' %}">Logout</a></li>
                     {% else %}
-                        <li><a href="{% url 'blog:login' %}" onClick="activateItem(this)">Login</a></li>
+                        <li><a href="{% url 'blog:login' %}">Login</a></li>
                     {% endif %}
                 </li>
             </div>
@@ -72,11 +72,11 @@
                     <ul class="main-menu visible-on-click links" id="main-menu">
                         <!-- <li class="blog-categories"><a href="{% url 'blog:categories_list' %}">Categories</a></li> -->
                         <li class="nav-menu-account">
-                            <li><a href="{% url 'blog:home' %}" onclick="loadXMLDoc('STATISTICS1.xml')">Home</a></li> 
+                            <li><a class="menu active" href="{% url 'blog:home' %}">Home</a></li> 
                             <!-- <li><a href="{{ request.scheme }}://{{ request.get_host }}/tag/Trending/articles" onclick="loadXMLDoc('STATISTICS1.xml')">Trending</a></li> -->
                         </li>
                         <div class="dropdown">
-                            <button class="dropbtn"><li class="blog-categories"><a href="{% url 'blog:categories_list' %}" onclick="loadXMLDoc('STATISTICS1.xml')">Categories<i class="fas fa-angle-down"></i></a></li></button>
+                            <button class="dropbtn"><li class="blog-categories"><a class="menu" href="{% url 'blog:categories_list' %}">Categories<i class="fas fa-angle-down"></i></a></li></button>
                             <div class="blog-area section container">
                                 <h1 class="title display-table-cell" style="color:#0275d8; font-size: 30px; padding: 40px 200px 0 0;"><b><a href="{% url 'blog:categories_list' %}">Categories</a></b></h1>
                                 <!-- {% if categories %} -->
