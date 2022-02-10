@@ -27,7 +27,7 @@ class ArticleListView(ListView):
 
         articles = Article.objects.all()
 
-        enumerate_articles = enumerate(articles)
+        # enumerate_articles = enumerate(articles)
 
         context = super().get_context_data(**kwargs)
         context['categories'] = Category.objects.filter(approved=True)
@@ -59,7 +59,7 @@ class ArticleListView(ListView):
         context['recent_articles'] = recent_articles
         context['latest'] = latest
         context['most_trending_article'] =  most_trending_article
-        context['enumerate_articles'] =  enumerate_articles
+        # context['enumerate_articles'] =  enumerate_articles
         context['other_trending_articles'] =  other_trending_articles
         return context
 

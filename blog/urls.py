@@ -46,12 +46,15 @@ from blog.views.dashboard.author.author_profile_views import (
 )
 
 from blog.views.account.register_view import (
-      ActivateView,
-      AccountActivationSentView,
-      UserRegisterView,
+    ActivateView,
+    AccountActivationSentView,
+    UserRegisterView,
 )
 from blog.views.account.logout_view import UserLogoutView
 from blog.views.account.login_view import UserLoginView
+
+from django.conf.urls import url
+from blog.views.chatterbot_views import ChatterBotAppView, ChatterBotApiView
 
 
 # Specifies the app name for name spacing.
@@ -83,7 +86,7 @@ urlpatterns = [
         view=ArticleSearchListView.as_view(),
         name='article_search_list_view'
 
-     ),
+    ),
 
     # /tag/<str:tag_name>/
     path(
@@ -107,7 +110,7 @@ urlpatterns = [
         route='author/<str:username>/articles',
         view=AuthorArticlesListView.as_view(),
         name='author_articles'
-     ),
+    ),
 
 
     # CATEGORY URLS #
@@ -161,8 +164,8 @@ urlpatterns = [
 
     # Reply comments
     path(
-        'comments/reply/', 
-        view=ReplyCreateView.as_view(), 
+        'comments/reply/',
+        view=ReplyCreateView.as_view(),
         name="reply"
     ),
 
@@ -286,6 +289,19 @@ urlpatterns = [
         view=DashboardArticleDetailView.as_view(),
         name='dashboard_article_detail'
 
+    ),
+
+
+    url(
+        r'^chatterbot/',
+        ChatterBotAppView.as_view(),
+        name='main'
+    ),
+
+    url(
+        r'^api/chatterbot/',
+        ChatterBotApiView.as_view(),
+        name='chatterbot'
     ),
 
 ]

@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -26,7 +27,7 @@ SECRET_KEY = 'django-insecure--dpt(1-((0g#h02)t(@4f8-hz)in6ebf0e58%552za7oo-2#tq
 DEBUG = True
 
 ALLOWED_HOSTS = []
-SITE_ID=1
+SITE_ID = 1
 
 # Application definition
 
@@ -37,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'blog',
+    # 'blog',
     'ckeditor',
     'ckeditor_uploader',
     'taggit',
@@ -45,8 +46,18 @@ INSTALLED_APPS = [
     'django_filters',
     'rest_framework',
     'crispy_forms',
-    #'blog.apps.BlogConfig',
+    'blog.apps.BlogConfig',
+    'chatterbot.ext.django_chatterbot',
 ]
+
+CHATTERBOT = {
+    'name': 'Tech Support Bot',
+    'logic_adapters': [
+        'chatterbot.logic.BestMatch',
+        'chatterbot.logic.MathematicalEvaluation',
+        # 'chatterbot.logic.TimeLogicAdapter',
+    ]
+}
 
 TAGGIT_CASE_INSENSITIVE = False
 
@@ -59,7 +70,6 @@ LOGOUT_REDIRECT_URL = '/account/logout/'
 #EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 
-
 # Email Settings (Production)
 EMAIL_BACKEND = ''
 EMAIL_HOST = ''
@@ -67,9 +77,6 @@ EMAIL_HOST_USER = ''
 EMAIL_HOST_PASSWORD = ""
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-
-
-
 
 
 MIDDLEWARE = [
@@ -150,19 +157,18 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-#this code
+# this code
 STATICFILES_DIRS = [
     BASE_DIR / "blog/static",
 ]
 
-import os
 
-STATICFILES_DIRS = [ os.path.join(BASE_DIR, "blog/static"),]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "blog/static"), ]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.FileSystemFinder",
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
-    ]
+]
 
 
 # Media files (User uploaded images)
@@ -170,28 +176,30 @@ STATICFILES_FINDERS = [
 #MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-#ckeditor upload path
+# ckeditor upload path
 CKEDITOR_UPLOAD_PATH = 'ck-uploads/'
 CKEDITOR_ALLOW_NONIMAGE_FILES = False
 
 CKEDITOR_CONFIGS = {
     'default': {
-     
+
         # 'skin': 'moono',
         # # 'skin': 'office2013',
         # 'toolbar_Basic': [
         #     ['Source', '-', 'Bold', 'Italic']
         # ],
         'toolbar_Custom': [
-            {'name': 'document', 'items': ['Source', '-', 'Save', 'NewPage', 'Preview', 'Print', '-', 'Templates']},
-            {'name': 'clipboard', 'items': ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo']},
-            {'name': 'editing', 'items': ['Find', 'Replace', '-', 'SelectAll']},
+            {'name': 'document', 'items': [
+                'Source', '-', 'Save', 'NewPage', 'Preview', 'Print', '-', 'Templates']},
+            {'name': 'clipboard', 'items': [
+                'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo']},
+            {'name': 'editing', 'items': [
+                'Find', 'Replace', '-', 'SelectAll']},
             {'name': 'forms',
              'items': ['Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'Select', 'Button', 'ImageButton',
                        'HiddenField']},
@@ -204,9 +212,10 @@ CKEDITOR_CONFIGS = {
                        'Language']},
             {'name': 'links', 'items': ['Link', 'Unlink', 'Anchor']},
             {'name': 'insert',
-             'items': ['Image', 'Youtube','Flash', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar', 'PageBreak', 'Iframe']},
+             'items': ['Image', 'Youtube', 'Flash', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar', 'PageBreak', 'Iframe']},
             '/',
-            {'name': 'styles', 'items': ['Styles', 'Format', 'Font', 'FontSize']},
+            {'name': 'styles', 'items': [
+                'Styles', 'Format', 'Font', 'FontSize']},
             {'name': 'colors', 'items': ['TextColor', 'BGColor']},
             {'name': 'tools', 'items': ['Maximize', 'ShowBlocks']},
             {'name': 'about', 'items': ['CodeSnippet']},
@@ -220,7 +229,7 @@ CKEDITOR_CONFIGS = {
             ]},
         ],
         'toolbar': 'Custom',  # put selected toolbar config here
-        'toolbarGroups': [{ 'name': 'document', 'groups': [ 'mode', 'document', 'doctools' ] }],
+        'toolbarGroups': [{'name': 'document', 'groups': ['mode', 'document', 'doctools']}],
         'height': 400,
         # 'width': '100%',
         'filebrowserWindowHeight': 725,
@@ -229,7 +238,7 @@ CKEDITOR_CONFIGS = {
         'mathJaxLib': '//cdn.mathjax.org/mathjax/2.2-latest/MathJax.js?config=TeX-AMS_HTML',
         'tabSpaces': 4,
         'extraPlugins': ','.join([
-            'uploadimage', # the upload image feature
+            'uploadimage',  # the upload image feature
             # your extra plugins here
             'div',
             'autolink',
