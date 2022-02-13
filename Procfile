@@ -1,1 +1,1 @@
-web: gunicorn koretgist.wsgi --log-file -
+web: gunicorn koretgist.wsgi
