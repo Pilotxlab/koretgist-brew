@@ -54,7 +54,9 @@ from blog.views.account.logout_view import UserLogoutView
 from blog.views.account.login_view import UserLoginView
 
 from django.conf.urls import url
-from blog.views.chatterbot_views import ChatterBotAppView, ChatterBotApiView
+
+from blog.views.chatterbot_views import fbchat
+from blog.views import chatterbot_views
 
 
 # Specifies the app name for name spacing.
@@ -291,17 +293,17 @@ urlpatterns = [
 
     ),
 
+    # url(
+    #     r'^chatterbot/',
+    #     view=fbchat.as_view(),
+    #     name="fbchat"
+    # ),
 
     url(
         r'^chatterbot/',
-        ChatterBotAppView.as_view(),
-        name='main'
+        chatterbot_views.fbchat,
+        name="main"
     ),
 
-    url(
-        r'^api/chatterbot/',
-        ChatterBotApiView.as_view(),
-        name='chatterbot'
-    ),
 
 ]
